@@ -1,0 +1,8 @@
+.git/
+.nyc_output/
+.gitignore
+.npmignore
+node_modules
+npm-debug.log
+.npmrc
+.DS_Store

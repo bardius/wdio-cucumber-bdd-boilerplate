@@ -1,0 +1,17 @@
+{
+  "plugins": [
+      "transform-runtime",
+      "transform-proto-to-assign",
+      "transform-decorators-legacy",
+      "transform-decorators",
+      "transform-class-properties"
+  ],
+  "presets": [["env",  {
+      "loose": true,
+      "module": false,
+      "useBuiltIns": "entry",
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7", "ie 9"]
+      }
+  }]]
+}

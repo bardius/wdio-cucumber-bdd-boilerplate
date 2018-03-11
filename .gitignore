@@ -1,0 +1,48 @@
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+# Examples: https://github.com/github/gitignore
+
+# Project #
+########
+node_modules/
+*.map
+
+
+# Tests #
+########
+output/**/*
+reports/**/*
+
+
+# Logs #
+########
+*.log
+*.lck
+*.log.*
+seleniumLog*.*
+
+
+# SASS #
+########
+.sass-cache/
+*.scssc
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+*.DS_Store
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+
+# Random #
+#################
+*.sublime-*
+nbproject/
+*.iml
+.idea/

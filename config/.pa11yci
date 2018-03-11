@@ -1,0 +1,32 @@
+{
+    "defaults": {
+        "wait": 5000,
+        "standard": "WCAG2AA",
+        "rules": [
+            "Principle1.Guideline1_3.1_3_1_AAA"
+        ],
+        "hideElements": "#element1, #element2, #element3",
+        "page": {
+            "viewport": { "width": 1024, "height": 768 }
+        },
+        "phantom": {
+            "parameters": {
+                "ignore-ssl-errors": "true"
+            }
+        },
+        "ignore": [
+            "notice",
+            "warning",
+            "WCAG2AA.Principle3.Guideline3_1.3_1_1.H57.2"
+        ],
+        "timeout": 60000
+    },
+    "urls": [
+        {
+            "url": "http://www.google.com",
+            "actions": [
+                "wait for the element #gsr to be visible"
+            ]
+        }
+    ]
+}

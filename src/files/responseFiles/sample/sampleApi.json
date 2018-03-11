@@ -1,0 +1,22 @@
+{
+    "properties": {
+        "sampleItems": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "sampleKey": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "sampleKey"
+                ]
+            }
+        }
+    },
+    "type": "object",
+    "required": [
+        "sampleItems"
+    ]
+}

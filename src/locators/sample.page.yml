@@ -1,0 +1,6 @@
+## Login form
+sign_in_button: '//*[@id="gb_70"]'
+username_input: '//*[@name="identifier"]'
+password_input: '//*[@name="identifier"]'
+login_button: '//*[@id="identifierNext"]'
+logout_button: '//*[@id="gb_70"]'
