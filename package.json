@@ -1,7 +1,7 @@
 {
     "name": "wdio-cucumber-bdd-boilerplate",
     "title": "Boilerplate for WebdriverIO & CucumberJS (sync mode) for BDD testing",
-    "description": "Boilerplate for WebdriverIO & CucumberJS (sync mode) for BDD testing",
+    "description": "Boilerplate for WebdriverIO & CucumberJS (sync mode) for BDD testing to kickstart new projects",
     "keywords": [
         "BDD",
         "Cucumber Boilerplate",
@@ -9,6 +9,7 @@
         "WebriverIO",
         "Pa11y",
         "Axe",
+        "Allure",
         "SiteSpeedIO"
     ],
     "version": "v1.0.0",
@@ -41,7 +42,7 @@
         "advanced-json-path": "^1.0.8",
         "alasql": "^0.4.5",
         "allure-commandline": "^2.5.0",
-        "apickli": "^2.0.0"
+        "apickli": "^2.0.0",
         "asyncawait": "^1.0.6",
         "axe-core": "^2.6.1",
         "axe-reports": "^1.1.8",
