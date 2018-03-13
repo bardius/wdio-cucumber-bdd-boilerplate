@@ -31,3 +31,18 @@ function enhancedWorld({attach, parameters}){
 defineSupportCode(function({setWorldConstructor}){
     setWorldConstructor(enhancedWorld);
 });
+
+defineSupportCode(function({defineParameterType}){
+    defineParameterType({
+        regexp: /[^"]*/,
+        transformer: function(stepArgument) {
+            if(stepArgument.indexOf('locator_') > -1){
+                return world.getSelector(stepArgument.split('locator_').pop());
+            }
+            return stepArgument;
+        },
+        preferForRegexpMatch: true,
+        typeName: 'locator',
+        name: 'locator'
+    });
+});

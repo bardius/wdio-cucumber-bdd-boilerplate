@@ -18,6 +18,7 @@ Feature: Sample - Sample Feature
     @sample @GeorgeBardis @tag1
     Scenario Outline: Sample - Sample Feature - Sample Scenario
         # User login steps
+        When I scroll to element "locator_test"
         When I click on "sign_in_button" as login step
         Then I am redirected to "login_page" page as login step
         When I click on "username_input" as login step
