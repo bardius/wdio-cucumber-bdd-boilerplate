@@ -26,6 +26,7 @@ Feature: Sample - Sample Feature
         And I click on "password_input" as login step
         And I enter the <password> in "password_input" as login step
         And I take screenshot of "Login Page"
+        And I scroll to element "login_button"
         And I click on "login_button" as login step
         Then I am redirected to "authenticated_page" page as login step
 

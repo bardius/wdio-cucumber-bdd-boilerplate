@@ -36,10 +36,7 @@ defineSupportCode(function({defineParameterType}){
     defineParameterType({
         regexp: /[^"]*/,
         transformer: function(stepArgument) {
-            if(stepArgument.indexOf('locator_') > -1){
-                return world.getSelector(stepArgument.split('locator_').pop());
-            }
-            return stepArgument;
+            return world.getSelector(stepArgument).replace(/\s*$/, '');
         },
         preferForRegexpMatch: true,
         typeName: 'locator',
