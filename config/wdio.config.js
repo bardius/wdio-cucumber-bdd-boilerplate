@@ -6,7 +6,7 @@ const suites = require('./suites.config.js');
 const capabilityProvider = require('./capability.config.js');
 
 // Specify the URL set that the tests will run against
-const env = argv.env || 'local';
+const env = argv.env || 'prod';
 
 // Specify the argument values passed for the tests
 const isDebugMode = argv.debug || false;

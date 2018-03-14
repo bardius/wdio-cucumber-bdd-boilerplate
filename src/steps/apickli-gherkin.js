@@ -6,6 +6,11 @@ const prettyJson = require('prettyjson');
 // Converted the original apickli/apickli-gherkin Step definition to non callback
 // instead of importing the from module.exports = require('apickli/apickli-gherkin');
 defineSupportCode(function({Given, When, Then}) {
+    Given(/^I set the API domain to "([^"]*)"$/, function(urlKey) {
+        this.apickli.domain = this.config.serverUrls[urlKey];
+        console.log(chalk.cyan(`API Domain changed to: ${this.apickli.domain}`));
+    });
+
     Given(/^I set (.*) header to (.*)$/, function(headerName, headerValue) {
         this.apickli.addRequestHeader(headerName, headerValue);
     });

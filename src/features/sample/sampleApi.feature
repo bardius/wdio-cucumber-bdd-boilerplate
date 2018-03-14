@@ -13,9 +13,13 @@ Feature: Sample - Sample API Feature
 
     @sampleAPI @GeorgeBardis @tag1
     Scenario Outline: Sample - Sample API Feature - Setting headers in GET request
-        Given I set User-Agent header to apickli
+        Given I set the API domain to "httpbin_api"
+        And I set User-Agent header to apickli
         When I GET /get
         Then response body path $.headers.User-Agent should be apickli
+        And response code should be 200
+        And response body should be valid json
+        And response body should contain http://httpbin.org/get
         And response body should be valid according to schema file responseFiles/sample/httpbin_1.0_get.json
         And response body should be valid according to openapi description 200OK in file swaggerFiles/sample/httpbin_1.0.json
 

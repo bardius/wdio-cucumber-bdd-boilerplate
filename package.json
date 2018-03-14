@@ -103,7 +103,7 @@
     },
     "scripts": {
         "setup": "npm install --no-optional --color-always",
-        "postinstall": "npm install gulp --no-optional && gulp selenium:install",
+        "postinstall": "npm install gulp --no-optional && gulp selenium:install && npm run check",
         "start": "gulp execute && npm run allure-report",
         "selenium": "gulp selenium:start",
         "saucelabs": "gulp saucelabs",
@@ -111,11 +111,11 @@
         "local-saucelabs": "gulp saucelabs --conf=grade1",
         "ci-saucelabs": "gulp saucelabs --conf=ci.grade1",
         "allure-report": "allure generate output/allure-results/ -o reports/allure-report",
-        "check": "./node_modules/.bin/npm-check -u",
         "test:pa11y-ci": "gulp create-folders && pa11y-ci --config ./config/.pa11yci 2>&1 | tee reports/pa11y/results.log",
         "test:pa11y": "gulp pa11y-test 2>&1 | tee reports/pa11y/pa11y-report.html",
         "test:sitespeed": "gulp sitespeed-test",
-        "lint": "./node_modules/.bin/eslint 'src/**/*.js'"
+        "lint": "./node_modules/.bin/eslint 'src/**/*.js'",
+        "check": "./node_modules/.bin/npm-check -s --color || true"
     },
     "precommit": []
 }

@@ -8,9 +8,9 @@ const chalk = require('chalk');
 defineSupportCode(({ Given, When, Then }) => {
 
     // Navigate to a Url
-    // Gherkin - Given I launch the website "url_key"
-    Given(/^I navigate to the Url "([^"]*)"$/, function(url_key){
-        const targetUrl = this.config.serverUrls[url_key];
+    // Gherkin - Given I launch the website "urlKey"
+    Given(/^I navigate to the Url "([^"]*)"$/, function(urlKey){
+        const targetUrl = this.config.serverUrls[urlKey];
         console.log(chalk.cyan(`Launching Url: ${targetUrl}`));
 
         expect(targetUrl, 'Target URL not defined').to.not.be.undefined;

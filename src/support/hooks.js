@@ -21,7 +21,7 @@ defineSupportCode(function({After, Before}) {
     });
 
     After(function (scenarioResult) {
-        if(chalk.cyan(scenarioResult.isFailed())){
+        if(scenarioResult.isFailed()){
             try {
                 let failedStep = '';
                 scenarioResult.stepResults.map((stepResult) => {
@@ -30,7 +30,7 @@ defineSupportCode(function({After, Before}) {
                     }
                 });
                 const screenShotStream = browser.saveScreenshot();
-                this.attach('ScreenShot for failed test: ' + scenarioResult.scenario.name + ' - ' + failedStep);
+                this.attach('Screenshot for failed test: ' + scenarioResult.scenario.name + ' - ' + failedStep);
                 return this.attach(screenShotStream, 'image/png');
             }
             catch (error) {
