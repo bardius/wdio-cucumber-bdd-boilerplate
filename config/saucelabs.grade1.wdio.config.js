@@ -3,24 +3,28 @@ const path = require('path');
 
 const wdioConfig = require('./wdio.config.js');
 
+global.sauceConnectProcess = null;
+
+const tunnelIdentifier = argv.tunnel || `bdd-tests-saucelabs-tunnel-${Math.round(Math.random() * 10) + 1}`;
+const logFile = path.join(__dirname, '/../output/saucelabs-connect.log');
+
 // Specify the port for the Selenium
 // 4444 for local run, 4445 for Saucelabs and  4723 for Appium
 const port = 4445;
+wdioConfig.config.port = port;
 
-global.sauceConnectProcess = null;
+wdioConfig.config.user = 'Saucelabs_user';
+wdioConfig.config.key = 'Saucelabs_key';
 
-const tunnelIdentifier = argv.tunnel || `bdd tests-saucelabs-tunnel-${Math.round(Math.random() * 10) + 1}`;
-const logFile = path.join(__dirname, '/../output/saucelabs-connect.log');
-
-wdioConfig.config.defaultTags = ['~@descoped', '~@manual', '~@wip', '~@mocks'];
-
-wdioConfig.config.services = ['sauce'];
-wdioConfig.config.user = ['Saucelabs_user'];
-wdioConfig.config.key = ['Saucelabs_key'];
+wdioConfig.config.services.push('sauce');
 wdioConfig.config.sauceConnect = true;
-wdioConfig.config.sauceConnectOptions = {
+
+wdioConfig.config.sauceConnectOpts = {
     username: 'Saucelabs_user',
     accessKey: 'Saucelabs_key',
+    proxy: null,
+    proxyTunnel: false,
+    pac: null,
     verbose: true,
     verboseDebugging: true,
     vv: true,
@@ -30,9 +34,10 @@ wdioConfig.config.sauceConnectOptions = {
     logger: console.log,
     logfile: logFile
 };
-wdioConfig.config.recordVideo = false;
+
+wdioConfig.config.recordVideo = true;
+wdioConfig.config.recordScreenshots = true;
 wdioConfig.config.videoUploadOnPass = false;
-wdioConfig.config.recordScreenshots = false;
 wdioConfig.config.webdriverRemoteQuietExceptions = false;
 
 wdioConfig.config.loglevel = 'silent';

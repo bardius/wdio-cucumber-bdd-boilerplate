@@ -11,6 +11,7 @@ const env = argv.env || 'prod';
 // Specify the argument values passed for the tests
 const isDebugMode = argv.debug || false;
 const isHeadlessBrowser = argv.headless || false;
+const isHubMode = argv.hub || false;
 
 // Specify the browser that the tests will run against
 const browser = argv.browser || 'chrome';
@@ -24,12 +25,20 @@ const maxInstances = 5;
 
 // Specify the port for the Selenium
 // 4444 for local run, 4445 for Saucelabs and  4723 for Appium
-const port = 4444;
+const port = isHubMode ? argv.port || 5555 : 4444;
+const host = isHubMode ? argv.port || '128.0.0.1' : 'localhost';
+const proxy = isHubMode ? argv.proxy : null;
+const hubPath = isHubMode ? '/wd/hub' : '';
 
 // Generate the capability object based on the provided arguments
 const capability = capabilityProvider.getCapability(browser, isHeadlessBrowser, maxInstances);
 
 exports.config = {
+    host: host,
+    port: port,
+    path: hubPath,
+    proxy: null,
+
     env: env,
     serverUrls: urls.getURL(env),
     expectedResponseFolderPath: 'src/files/responseFiles',
@@ -58,6 +67,9 @@ exports.config = {
     exclude: [
         // 'path/to/excluded/files'
     ],
+
+    defaultTags: ['~@descoped', '~@manual', '~@wip', '~@mocks'],
+
     //
     // ============
     // Capabilities

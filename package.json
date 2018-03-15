@@ -108,6 +108,7 @@
         "selenium": "gulp selenium:start",
         "saucelabs": "gulp saucelabs",
         "execute": "gulp execute",
+        "execute:hub": "gulp execute-hub --hub=true",
         "local-saucelabs": "gulp saucelabs --conf=grade1",
         "ci-saucelabs": "gulp saucelabs --conf=ci.grade1",
         "allure-report": "allure generate output/allure-results/ -o reports/allure-report",

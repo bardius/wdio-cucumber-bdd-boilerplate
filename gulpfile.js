@@ -208,7 +208,21 @@ gulp.task('selenium:start', (done) => {
     }
 });
 
-gulp.task('sitespeed-test', ['create-folders'], (done) => {
+gulp.task('pa11y-test', ['clean', 'create-folders'], (done) => {
+    const testUrl = pallyUrls()[0];
+
+    pallyTest.run(testUrl, function (error, results) {
+        if (error) {
+            console.error(error.message);
+            done();
+        }
+
+        pa11yHTMLReporter.results(results, testUrl);
+        done();
+    });
+});
+
+gulp.task('sitespeed-test', ['clean', 'create-folders'], (done) => {
     sitespeedio({
         config: './config/sitespeed.config.json',
         browsertime: {
@@ -219,7 +233,8 @@ gulp.task('sitespeed-test', ['create-folders'], (done) => {
     })(done)
 });
 
-gulp.task('wdio', ['selenium:start'], (done) => {
+// Usage: gulp wdio --env=local --project=sample --feature=sampleFeature --suite=sample --tags="@tag1 and @tag2" --debug=true --browser=chrome --headless=false --hub=false
+gulp.task('wdio', (done) => {
     return gulp.src('config/wdio.config.js')
         .pipe(webdriver(wdioConfigObject))
         .once('end', () => {
@@ -229,7 +244,7 @@ gulp.task('wdio', ['selenium:start'], (done) => {
         });
 });
 
-// Usage: gulp saucelabs --env=local --testConf=grade1 --project=sample --feature=sampleFeature --debug=true --browser=chrome
+// Usage: gulp saucelabs --env=local --conf=grade1 --project=sample --feature=sampleFeature --suite=sample --tags="@tag1 and @tag2" --debug=true --browser=chrome --headless=false
 gulp.task('saucelabs', ['create-folders'], (done) => {
     const wdioConfSrc = `config/saucelabs.${selectedConfig}.wdio.config.js`;
     console.log(`Configuration from ${wdioConfSrc}`);
@@ -243,19 +258,6 @@ gulp.task('saucelabs', ['create-folders'], (done) => {
         });
 });
 
-// Usage: gulp execute --env=local --project=sample --feature=sampleFeature --debug=true --browser=chrome
-gulp.task('execute', gulpSequence('clean', 'create-folders', 'wdio', ['cucumber-report']));
-
-gulp.task('pa11y-test', ['create-folders'], (done) => {
-    const testUrl = pallyUrls()[0];
-
-    pallyTest.run(testUrl, function (error, results) {
-        if (error) {
-            console.error(error.message);
-            done();
-        }
-
-        pa11yHTMLReporter.results(results, testUrl);
-        done();
-    });
-});
+// Usage: gulp execute --env=local --project=sample --feature=sampleFeature --suite=sample --tags="@tag1 and @tag2" --debug=true --browser=chrome --headless=false --hub=false
+gulp.task('execute', gulpSequence('clean', 'create-folders', 'selenium:start', 'wdio', ['cucumber-report']));
+gulp.task('execute-hub', gulpSequence('clean', 'create-folders', 'wdio', ['cucumber-report']));
