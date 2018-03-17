@@ -7,7 +7,7 @@ const mkdirp = require('mkdirp');
 const del = require('del');
 const cucumberReporter = require('cucumber-html-reporter');
 const os = require('os');
-//const sitespeedio = require('gulp-sitespeedio');
+// const sitespeedio = require('gulp-sitespeedio');
 
 const pa11y = require('pa11y');
 const pa11yHTMLReporter = require('./node_modules/pa11y/reporter/html.js');
@@ -17,7 +17,7 @@ const pallyTest = pa11y(pallyConfig());
 
 const selectedSuite = argv.suite || null;
 const selectedTags = argv.tags || null;
-const selectedConfig = argv.conf || 'grade1';
+const selectedGrade = argv.grade || 'grade1';
 const selectedBrowser = argv.browser || 'chrome';
 const selectedEnv = argv.env || 'prod';
 const selectedProject = argv.project || '';
@@ -29,19 +29,19 @@ const osPlatform = `${os.type()} - ${os.release()} - ${os.platform()}`;
 
 let wdioConfigObject = {};
 
-if(selectedSuite){
+if (selectedSuite) {
     wdioConfigObject.suite = selectedSuite;
 }
 
-if(selectedProject || selectedFeatureFile){
-    let featureFileProjectPath = selectedProject || '**';
-    let featureFilePath = selectedFeatureFile || '*';
+if (selectedProject || selectedFeatureFile) {
+    const featureFileProjectPath = selectedProject || '**';
+    const featureFilePath = selectedFeatureFile || '*';
     wdioConfigObject.specs = [`./src/features/${featureFileProjectPath}/${featureFilePath}.feature`];
 }
 
-if(selectedTags){
+if (selectedTags) {
     wdioConfigObject.cucumberOpts = {
-        'tagExpression': selectedTags
+        tagExpression: selectedTags
     };
 }
 
@@ -246,7 +246,7 @@ gulp.task('wdio', (done) => {
 
 // Usage: gulp saucelabs --env=local --conf=grade1 --project=sample --feature=sampleFeature --suite=sample --tags="@tag1 and @tag2" --debug=true --browser=chrome --headless=false
 gulp.task('saucelabs', ['create-folders'], (done) => {
-    const wdioConfSrc = `config/saucelabs.${selectedConfig}.wdio.config.js`;
+    const wdioConfSrc = `config/wdio.saucelabs.${selectedGrade}.config.js`;
     console.log(`Configuration from ${wdioConfSrc}`);
 
     return gulp.src(wdioConfSrc.toLowerCase())

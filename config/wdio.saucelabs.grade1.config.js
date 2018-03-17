@@ -5,26 +5,33 @@ const wdioConfig = require('./wdio.config.js');
 
 global.sauceConnectProcess = null;
 
+const sauceUser = 'Saucelabs_user';
+const sauceKey = 'Saucelabs_key';
+
+const scProxy = argv.scProxy || null;
+const scPac = argv.scPac ? 'file://' + path.join(__dirname, '/proxies/sample-proxy.js') : null;
+const proxyTunnel = argv.proxyTunnel || false;
+
 const tunnelIdentifier = argv.tunnel || `bdd-tests-saucelabs-tunnel-${Math.round(Math.random() * 10) + 1}`;
 const logFile = path.join(__dirname, '/../output/saucelabs-connect.log');
 
 // Specify the port for the Selenium
 // 4444 for local run, 4445 for Saucelabs and  4723 for Appium
-const port = 4445;
+const port = argv.port || 4445;
 wdioConfig.config.port = port;
 
-wdioConfig.config.user = 'Saucelabs_user';
-wdioConfig.config.key = 'Saucelabs_key';
+wdioConfig.config.user = sauceUser;
+wdioConfig.config.key = sauceKey;
 
 wdioConfig.config.services.push('sauce');
 wdioConfig.config.sauceConnect = true;
 
 wdioConfig.config.sauceConnectOpts = {
-    username: 'Saucelabs_user',
-    accessKey: 'Saucelabs_key',
-    proxy: null,
-    proxyTunnel: false,
-    pac: null,
+    username: sauceUser,
+    accessKey: sauceKey,
+    proxy: scProxy,
+    proxyTunnel: proxyTunnel,
+    pac: scPac,
     verbose: true,
     verboseDebugging: true,
     vv: true,
@@ -44,7 +51,6 @@ wdioConfig.config.loglevel = 'silent';
 
 wdioConfig.config.capabilities = [
     {
-        maxInstances: 1,
         browserName: 'Chrome',
         version: 'latest',
         platform: 'Windows 10',
@@ -55,7 +61,6 @@ wdioConfig.config.capabilities = [
         acceptInsecureCerts: true,
         seleniumVersion: '3.4.0',
         name: 'Sample-Chrome-Win1-Grade1',
-        'tunnel-identifier': tunnelIdentifier,
         chromeOptions: {
             prefs: {
                 credentials_enable_service: false,
@@ -70,7 +75,6 @@ wdioConfig.config.capabilities = [
         }
     },
     {
-        maxInstances: 1,
         browserName: 'Safari',
         version: '9',
         platform: 'OS X 10.11',

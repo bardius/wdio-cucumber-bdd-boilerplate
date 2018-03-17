@@ -12,6 +12,13 @@ const env = argv.env || 'prod';
 const isDebugMode = argv.debug || false;
 const isHeadlessBrowser = argv.headless || false;
 const isHubMode = argv.hub || false;
+const proxy = argv.proxy || null;
+
+// Specify the port for the Selenium
+// 4444 for local run, 4445 for Saucelabs and  4723 for Appium
+const port = argv.port || (isHubMode ? 5555 : 4444);
+const host = argv.host || (isHubMode ? '128.0.0.1' : 'localhost');
+const hubPath = isHubMode ? '/wd/hub' : '';
 
 // Specify the browser that the tests will run against
 const browser = argv.browser || 'chrome';
@@ -23,13 +30,6 @@ const shouldNotLoadFirefoxProfile = !(browser === 'firefox') || argv.headless;
 // Specify the max of concurrent browser instances
 const maxInstances = 5;
 
-// Specify the port for the Selenium
-// 4444 for local run, 4445 for Saucelabs and  4723 for Appium
-const port = isHubMode ? argv.port || 5555 : 4444;
-const host = isHubMode ? argv.port || '128.0.0.1' : 'localhost';
-const proxy = isHubMode ? argv.proxy : null;
-const hubPath = isHubMode ? '/wd/hub' : '';
-
 // Generate the capability object based on the provided arguments
 const capability = capabilityProvider.getCapability(browser, isHeadlessBrowser, maxInstances);
 
@@ -37,7 +37,7 @@ exports.config = {
     host: host,
     port: port,
     path: hubPath,
-    proxy: null,
+    proxy: proxy,
 
     env: env,
     serverUrls: urls.getURL(env),
