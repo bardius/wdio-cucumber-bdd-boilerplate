@@ -1,37 +1,13 @@
-import { defineSupportCode } from 'cucumber';
+import { Given, When, Then } from "cucumber";
 
-import pause from '../support/action/pause';
+// Set the browser as maximize window
+// Gherkin - When I maximize the browser
+When(/^I maximise the browser$/, function() {
+  browser.windowHandleMaximize();
+});
 
-defineSupportCode(({ Given, When, Then }) => {
-
-    // Set the browser as maximize window
-    // Gherkin - When I maximize the browser
-    When(/^I maximise the browser$/, function() {
-        //if(browser.desiredCapabilities.browserName === 'phantomjs'){
-        //    browser.windowHandleSize({width: 1280, height: 1024});
-        //}
-        //else {
-            browser.windowHandleMaximize();
-        //}
-    });
-
-    // Take a screen shot
-    // Gherkin - When I take screenshot of "evidence"
-    When(/^I take screenshot of "([^"]*)"$/, function(elementName) {
-        try {
-            const currentTime = new Date().toJSON().replace(/:/g, '-');
-            const normalizedScenarioName = this.scenarioName.replace(/ /g, '-').replace(/"/g, '').replace(/'/g, '').replace(/\//g, '').replace(/\\/g, '');
-            const screenShotFilename = (`./output/screenshots/${normalizedScenarioName}-I take screenshot of ${elementName}-${currentTime}.png`)
-                .replace(/ /g, '-').replace(/"/g, '');
-
-            pause(this.config.constants.MINI_PAUSE);
-            browser.saveScreenshot(screenShotFilename);
-            const screenShotStream = browser.saveScreenshot();
-            this.attach('Screenshot taken');
-            this.attach(screenShotStream, 'image/png');
-        }
-        catch (error) {
-            console.log(chalk.red(`${error}`));
-        }
-    });
+// Fail a scenario and mark it as incomplete in the reports
+// Gherkin - When I mark this scenario as incomplete
+Then(/^I mark this scenario as incomplete$/, function() {
+  expect(true, "Scenario is incomplete").to.be.false;
 });

@@ -1,374 +1,403 @@
 {
-    "swagger" : "2.0",
-    "info" : {
-        "version" : "1.0",
-        "title" : "httpbin",
-        "description" : "A Swagger wrapper for [httpbin.org](httpbin.org). Not all operations are listed here."
-    },
-    "schemes" : [ "https", "http" ],
-    "host" : "httpbin.org",
-    "produces" : [ "application/json" ],
-    "securityDefinitions" : {
-        "basicAuth" : {
-            "type" : "basic"
-        }
-    },
-    "tags" : [ {
-        "name" : "auth",
-        "description" : "Operations for testing Basic authentication"
-    } ],
-    "paths" : {
-        "/get" : {
-            "get" : {
-                "parameters" : [ {
-                    "in" : "header",
-                    "name" : "Authorization",
-                    "type" : "string",
-                    "x-example" : "Foo bar"
-                }, {
-                    "in" : "header",
-                    "name" : "Date",
-                    "type" : "string"
-                } ],
-                "summary" : "Gets something.",
-                "responses" : {
-                    "200" : {
-                        "description" : "OK"
-                    }
-                }
-            }
-        },
-        "/uuid" : {
-            "get" : {
-                "summary" : "Returns UUID4",
-                "responses" : {
-                    "200" : {
-                        "description" : "OK",
-                        "schema" : {
-                            "type" : "object",
-                            "properties" : {
-                                "uuid" : {
-                                    "type" : "string",
-                                    "format" : "uuid"
-                                }
-                            },
-                            "required" : [ "uuid" ]
-                        }
-                    }
-                }
-            }
-        },
-        "/ip" : {
-            "get" : {
-                "summary" : "Returns Origin IP.",
-                "responses" : {
-                    "200" : {
-                        "description" : "OK",
-                        "schema" : {
-                            "type" : "object",
-                            "properties" : {
-                                "origin" : {
-                                    "type" : "string",
-                                    "description" : "The IP address, or a comma-separated list. E.g. \"10.100.10.10, 10.100.20.254, 52.91.14.13\"",
-                                    "example" : "10.100.10.10"
-                                }
-                            },
-                            "required" : [ "origin" ]
-                        }
-                    }
-                }
-            }
-        },
-        "/user-agent" : {
-            "get" : {
-                "summary" : "Returns the user agent.",
-                "responses" : {
-                    "200" : {
-                        "description" : "OK",
-                        "schema" : {
-                            "type" : "object",
-                            "properties" : {
-                                "user-agent" : {
-                                    "type" : "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/headers" : {
-            "get" : {
-                "summary" : "Returns the request headers.",
-                "responses" : {
-                    "200" : {
-                        "description" : "OK",
-                        "schema" : {
-                            "type" : "object",
-                            "properties" : {
-                                "headers" : {
-                                    "type" : "object",
-                                    "additionalProperties" : {
-                                        "type" : "string"
-                                    }
-                                }
-                            },
-                            "required" : [ "headers" ]
-                        }
-                    }
-                }
-            }
-        },
-        "/post" : {
-            "post" : {
-                "summary" : "POSTs a pizza order and returns the POSTed data.",
-                "consumes" : [ "application/x-www-form-urlencoded" ],
-                "parameters" : [ {
-                    "in" : "formData",
-                    "name" : "custname",
-                    "type" : "string"
-                }, {
-                    "in" : "formData",
-                    "name" : "custtel",
-                    "type" : "string"
-                }, {
-                    "in" : "formData",
-                    "name" : "custemail",
-                    "type" : "string",
-                    "format" : "email"
-                }, {
-                    "in" : "formData",
-                    "name" : "size",
-                    "type" : "string",
-                    "enum" : [ "small", "medium", "large" ]
-                }, {
-                    "in" : "formData",
-                    "name" : "topping",
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "enum" : [ "bacon", "cheese", "mushroom", "onion" ]
-                    },
-                    "collectionFormat" : "multi"
-                }, {
-                    "in" : "formData",
-                    "name" : "delivery",
-                    "type" : "string"
-                }, {
-                    "in" : "formData",
-                    "name" : "comments",
-                    "type" : "string"
-                } ],
-                "responses" : {
-                    "200" : {
-                        "description" : "OK"
-                    }
-                }
-            }
-        },
-        "/delay/{n}" : {
-            "get" : {
-                "summary" : "Delays responding for min(n, 10) seconds.",
-                "parameters" : [ {
-                    "name" : "n",
-                    "in" : "path",
-                    "required" : true,
-                    "type" : "integer",
-                    "description" : "Response delay, in seconds."
-                } ],
-                "responses" : {
-                    "200" : {
-                        "description" : "OK"
-                    }
-                }
-            }
-        },
-        "/basic-auth/foo/bar" : {
-            "get" : {
-                "summary" : "Challenges HTTPBasic Auth.",
-                "description" : "Use `foo`/`bar` to authorize.",
-                "tags" : [ "auth" ],
-                "security" : [ {
-                    "basicAuth" : [ ]
-                } ],
-                "responses" : {
-                    "200" : {
-                        "$ref" : "#/responses/200BasicAuth"
-                    },
-                    "401" : {
-                        "description" : "Unauthorized (The username and password used for Basic auth do not match those in the URL path.)"
-                    }
-                }
-            }
-        },
-        "/hidden-basic-auth/{user}/{password}" : {
-            "get" : {
-                "summary" : "Hidden Basic authentication",
-                "tags" : [ "auth" ],
-                "description" : "Returns 404 Not Found unless the request is authenticated.",
-                "security" : [ {
-                    "basicAuth" : [ ]
-                } ],
-                "parameters" : [ {
-                    "$ref" : "#/parameters/user"
-                }, {
-                    "$ref" : "#/parameters/password"
-                } ],
-                "responses" : {
-                    "200" : {
-                        "$ref" : "#/responses/200BasicAuth"
-                    },
-                    "404" : {
-                        "description" : "Unautorized (the username and password used for Basic auth do not match those in the URL path.)"
-                    }
-                }
-            }
-        },
-        "/status/{statusCode}" : {
-            "get" : {
-                "summary" : "Returns the specified HTTP status code.",
-                "parameters" : [ {
-                    "name" : "statusCode",
-                    "in" : "path",
-                    "required" : true,
-                    "type" : "integer",
-                    "description" : "The status code to return."
-                } ],
-                "responses" : {
-                    "default" : {
-                        "description" : "A response with the requested status code."
-                    }
-                }
-            }
-        },
-        "/xml" : {
-            "get" : {
-                "summary" : "Returns some XML.",
-                "produces" : [ "application/xml" ],
-                "responses" : {
-                    "200" : {
-                        "description" : "OK"
-                    }
-                }
-            }
-        },
-        "/image/{format}" : {
-            "get" : {
-                "summary" : "Returns an image with the specified format.",
-                "tags" : [ "images" ],
-                "produces" : [ "image/png", "image/jpeg", "image/webp", "image/svg+xml" ],
-                "parameters" : [ {
-                    "in" : "path",
-                    "name" : "format",
-                    "required" : true,
-                    "type" : "string",
-                    "enum" : [ "png", "jpeg", "webp", "svg" ]
-                } ],
-                "responses" : {
-                    "200" : {
-                        "$ref" : "#/responses/200File"
-                    }
-                }
-            }
-        },
-        "/image" : {
-            "get" : {
-                "summary" : "Returns an image based on the Accept header.",
-                "tags" : [ "images" ],
-                "produces" : [ "image/png", "image/jpeg", "image/webp", "image/svg+xml", "image/*" ],
-                "responses" : {
-                    "200" : {
-                        "$ref" : "#/responses/200File"
-                    },
-                    "406" : {
-                        "description" : "Client did not request a supported media type."
-                    }
-                }
-            }
-        },
-        "/cache" : {
-            "get" : {
-                "summary" : "Returns 200 unless an If-Modified-Since or If-None-Match header is provided, when it returns a 304.",
-                "parameters" : [ {
-                    "in" : "header",
-                    "name" : "If-Modified-Since",
-                    "type" : "string",
-                    "description" : "For testing purposes this header accepts any value."
-                }, {
-                    "in" : "header",
-                    "name" : "If-None-Match",
-                    "type" : "string",
-                    "description" : "For testing purposes this header accepts any value."
-                } ],
-                "responses" : {
-                    "200" : {
-                        "description" : "Neigher If-Modified-Since nor If-None-Match header is provided"
-                    },
-                    "304" : {
-                        "description" : "If-Modified-Since or If-None-Match header is provided"
-                    }
-                }
-            }
-        }
-    },
-    "parameters" : {
-        "user" : {
-            "name" : "user",
-            "in" : "path",
-            "type" : "string",
-            "required" : true,
-            "description" : "Username. Use the same username in the path AND for authorization."
-        },
-        "password" : {
-            "name" : "password",
-            "in" : "path",
-            "type" : "string",
-            "required" : true,
-            "description" : "Password. Use the same password in the path AND for authorization."
-        }
-    },
-    "responses" : {
-        "200BasicAuth" : {
-            "description" : "OK",
-            "schema" : {
-                "type" : "object",
-                "properties" : {
-                    "authenticated" : {
-                        "type" : "boolean",
-                        "example" : true
-                    },
-                    "user" : {
-                        "type" : "string",
-                        "description" : "The user name specified in the request."
-                    }
-                }
-            }
-        },
-        "200File" : {
-            "description" : "OK",
-            "schema" : {
-                "type" : "file"
-            }
-        }
-    },
-    "definitions": {
-        "200OK": {
-            "additionalProperties": false,
-            "properties": {
-                "args": {
-                    "type": "object"
-                },
-                "headers": {
-                    "type": "object"
-                },
-                "origin": {
-                    "type": "string"
-                },
-                "url": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "httpbin",
+    "description": "A Swagger wrapper for [httpbin.org](httpbin.org). Not all operations are listed here."
+  },
+  "schemes": ["https", "http"],
+  "host": "httpbin.org",
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
     }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Operations for testing Basic authentication"
+    }
+  ],
+  "paths": {
+    "/get": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "x-example": "Foo bar"
+          },
+          {
+            "in": "header",
+            "name": "Date",
+            "type": "string"
+          }
+        ],
+        "summary": "Gets something.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/uuid": {
+      "get": {
+        "summary": "Returns UUID4",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "uuid": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": ["uuid"]
+            }
+          }
+        }
+      }
+    },
+    "/ip": {
+      "get": {
+        "summary": "Returns Origin IP.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "origin": {
+                  "type": "string",
+                  "description": "The IP address, or a comma-separated list. E.g. \"10.100.10.10, 10.100.20.254, 52.91.14.13\"",
+                  "example": "10.100.10.10"
+                }
+              },
+              "required": ["origin"]
+            }
+          }
+        }
+      }
+    },
+    "/user-agent": {
+      "get": {
+        "summary": "Returns the user agent.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user-agent": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/headers": {
+      "get": {
+        "summary": "Returns the request headers.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "headers": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": ["headers"]
+            }
+          }
+        }
+      }
+    },
+    "/post": {
+      "post": {
+        "summary": "POSTs a pizza order and returns the POSTed data.",
+        "consumes": ["application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "custname",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "custtel",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "custemail",
+            "type": "string",
+            "format": "email"
+          },
+          {
+            "in": "formData",
+            "name": "size",
+            "type": "string",
+            "enum": ["small", "medium", "large"]
+          },
+          {
+            "in": "formData",
+            "name": "topping",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["bacon", "cheese", "mushroom", "onion"]
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "formData",
+            "name": "delivery",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "comments",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delay/{n}": {
+      "get": {
+        "summary": "Delays responding for min(n, 10) seconds.",
+        "parameters": [
+          {
+            "name": "n",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Response delay, in seconds."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/basic-auth/foo/bar": {
+      "get": {
+        "summary": "Challenges HTTPBasic Auth.",
+        "description": "Use `foo`/`bar` to authorize.",
+        "tags": ["auth"],
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/200BasicAuth"
+          },
+          "401": {
+            "description": "Unauthorized (The username and password used for Basic auth do not match those in the URL path.)"
+          }
+        }
+      }
+    },
+    "/hidden-basic-auth/{user}/{password}": {
+      "get": {
+        "summary": "Hidden Basic authentication",
+        "tags": ["auth"],
+        "description": "Returns 404 Not Found unless the request is authenticated.",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/user"
+          },
+          {
+            "$ref": "#/parameters/password"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/200BasicAuth"
+          },
+          "404": {
+            "description": "Unautorized (the username and password used for Basic auth do not match those in the URL path.)"
+          }
+        }
+      }
+    },
+    "/status/{statusCode}": {
+      "get": {
+        "summary": "Returns the specified HTTP status code.",
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The status code to return."
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "A response with the requested status code."
+          }
+        }
+      }
+    },
+    "/xml": {
+      "get": {
+        "summary": "Returns some XML.",
+        "produces": ["application/xml"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/image/{format}": {
+      "get": {
+        "summary": "Returns an image with the specified format.",
+        "tags": ["images"],
+        "produces": ["image/png", "image/jpeg", "image/webp", "image/svg+xml"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "type": "string",
+            "enum": ["png", "jpeg", "webp", "svg"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/200File"
+          }
+        }
+      }
+    },
+    "/image": {
+      "get": {
+        "summary": "Returns an image based on the Accept header.",
+        "tags": ["images"],
+        "produces": ["image/png", "image/jpeg", "image/webp", "image/svg+xml", "image/*"],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/200File"
+          },
+          "406": {
+            "description": "Client did not request a supported media type."
+          }
+        }
+      }
+    },
+    "/cache": {
+      "get": {
+        "summary": "Returns 200 unless an If-Modified-Since or If-None-Match header is provided, when it returns a 304.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "If-Modified-Since",
+            "type": "string",
+            "description": "For testing purposes this header accepts any value."
+          },
+          {
+            "in": "header",
+            "name": "If-None-Match",
+            "type": "string",
+            "description": "For testing purposes this header accepts any value."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Neigher If-Modified-Since nor If-None-Match header is provided"
+          },
+          "304": {
+            "description": "If-Modified-Since or If-None-Match header is provided"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "user": {
+      "name": "user",
+      "in": "path",
+      "type": "string",
+      "required": true,
+      "description": "Username. Use the same username in the path AND for authorization."
+    },
+    "password": {
+      "name": "password",
+      "in": "path",
+      "type": "string",
+      "required": true,
+      "description": "Password. Use the same password in the path AND for authorization."
+    }
+  },
+  "responses": {
+    "200BasicAuth": {
+      "description": "OK",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "authenticated": {
+            "type": "boolean",
+            "example": true
+          },
+          "user": {
+            "type": "string",
+            "description": "The user name specified in the request."
+          }
+        }
+      }
+    },
+    "200File": {
+      "description": "OK",
+      "schema": {
+        "type": "file"
+      }
+    }
+  },
+  "definitions": {
+    "200OK": {
+      "additionalProperties": false,
+      "properties": {
+        "args": {
+          "type": "object"
+        },
+        "headers": {
+          "type": "object"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
 }

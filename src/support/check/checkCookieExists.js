@@ -5,21 +5,15 @@
  *                              not
  */
 module.exports = (name, falseCase) => {
-    /**
-     * The cookie as retrieved from the browser
-     * @type {Object}
-     */
-    const cookie = browser.getCookie(name);
+  /**
+   * The cookie as retrieved from the browser
+   * @type {Object}
+   */
+  const cookie = browser.getCookie(name);
 
-    if (falseCase) {
-        expect(cookie).to.equal(
-            null,
-            `Expected cookie "${name}" not to exists but it does`
-        );
-    } else {
-        expect(cookie).to.not.equal(
-            null,
-            `Expected cookie "${name}" to exists but it does not`
-        );
-    }
+  if (falseCase) {
+    expect(cookie).to.equal(null, `Expected cookie "${name}" not to exists but it does`);
+  } else {
+    expect(cookie).to.not.equal(null, `Expected cookie "${name}" to exists but it does not`);
+  }
 };

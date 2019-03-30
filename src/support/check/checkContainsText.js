@@ -7,47 +7,44 @@
  * @param  {String}   expectedText  The text to check against
  */
 module.exports = (elementType, element, falseCase, expectedText) => {
-    /**
-     * The command to perform on the browser object
-     * @type {String}
-     */
-    let command = 'getValue';
+  /**
+   * The command to perform on the browser object
+   * @type {String}
+   */
+  let command = "getValue";
 
-    if (
-        elementType === 'button' ||
-        browser.getAttribute(element, 'value') === null
-    ) {
-        command = 'getText';
-    }
+  if (elementType === "button" || browser.getAttribute(element, "value") === null) {
+    command = "getText";
+  }
 
-    /**
-     * False case
-     * @type {Boolean}
-     */
-    let boolFalseCase;
+  /**
+   * False case
+   * @type {Boolean}
+   */
+  let boolFalseCase;
 
-    /**
-     * The expected text
-     * @type {String}
-     */
-    let stringExpectedText = expectedText;
+  /**
+   * The expected text
+   * @type {String}
+   */
+  let stringExpectedText = expectedText;
 
-    /**
-     * The text of the element
-     * @type {String}
-     */
-    const text = browser[command](element);
+  /**
+   * The text of the element
+   * @type {String}
+   */
+  const text = browser[command](element);
 
-    if (typeof expectedText === 'undefined') {
-        stringExpectedText = falseCase;
-        boolFalseCase = false;
-    } else {
-        boolFalseCase = (falseCase === ' not');
-    }
+  if (typeof expectedText === "undefined") {
+    stringExpectedText = falseCase;
+    boolFalseCase = false;
+  } else {
+    boolFalseCase = falseCase === " not";
+  }
 
-    if (boolFalseCase) {
-        expect(text).to.not.contain(stringExpectedText);
-    } else {
-        expect(text).to.contain(stringExpectedText);
-    }
+  if (boolFalseCase) {
+    expect(text).to.not.contain(stringExpectedText);
+  } else {
+    expect(text).to.contain(stringExpectedText);
+  }
 };

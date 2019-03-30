@@ -1,0 +1,6 @@
+# All available options & documentation from:
+# http://json.schemastore.org/prettierrc
+
+printWidth: 160
+tabWidth: 2
+useTabs: false

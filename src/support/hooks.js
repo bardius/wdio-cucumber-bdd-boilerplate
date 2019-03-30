@@ -1,41 +1,62 @@
-import { defineSupportCode, Status } from 'cucumber';
+import { Before, After, Status, BeforeAll, setDefaultTimeout } from "cucumber";
 
-const apickli = require('apickli');
-const chalk = require('chalk');
+const apickli = require("apickli");
+const chalk = require("chalk");
 
-defineSupportCode(function({After, Before}) {
+const timeout = 115 * 1000;
 
-    Before(function (scenarioResult) {
-        const scenario = scenarioResult.scenario;
-        this.scenarioName = scenario.name;
+BeforeAll(function() {
+  // Set selenium timeouts
+  browser.timeouts("script", timeout);
 
-        this.apickli = new apickli.Apickli('http', 'httpbin.org', 'src/files/');
-        this.apickli.addRequestHeader('Cache-Control', 'no-cache');
+  // Set cucumber timeouts
+  setDefaultTimeout(timeout);
+});
 
-        console.log(chalk.green(`SCENARIO EXECUTION START: ${scenario.name}`));
+Before(function(scenario) {
+  this.apickli = new apickli.Apickli("http", "localhost", "src/files/");
+  this.apickli.addRequestHeader("Cache-Control", "no-cache");
+
+  this.currentScenario = scenario;
+
+  if (browser["world"].config) {
+    browser.windowHandleSize({
+      width: parseInt(browser["world"].config.viewportSize[0] || 1280),
+      height: parseInt(browser["world"].config.viewportSize[1] || 1024)
     });
+  } else {
+    console.log(chalk.red(`World config not set`));
+  }
+});
 
-    After(function (scenarioResult) {
-        const scenario = scenarioResult.scenario;
-        console.log(chalk.green(`SCENARIO EXECUTION COMPLETED: ${scenario.name}`));
-    });
+Before({ tags: "@manual" }, function(scenario) {
+  console.log(chalk.yellow(`Set scenario as skipped: ${scenario.pickle.name}`));
+  return Status.SKIPPED;
+});
 
-    After(function (scenarioResult) {
-        if(scenarioResult.isFailed()){
-            try {
-                let failedStep = '';
-                scenarioResult.stepResults.map((stepResult) => {
-                    if(stepResult.status === Status.FAILED){
-                        failedStep = stepResult.step.name;
-                    }
-                });
-                const screenShotStream = browser.saveScreenshot();
-                this.attach('Screenshot for failed test: ' + scenarioResult.scenario.name + ' - ' + failedStep);
-                return this.attach(screenShotStream, 'image/png');
-            }
-            catch (error) {
-                console.log(chalk.red(`${error}`));
-            }
-        }
-    });
+Before({ tags: "@pending or @wip" }, function(scenario) {
+  console.log(chalk.yellow(`Set scenario as pending: ${scenario.pickle.name}`));
+  return Status.PENDING;
+});
+
+After(function(scenario) {
+  if (scenario.result.status === Status.FAILED && browser["world"].config && !browser["world"].config.constants.skipManualScreenshots) {
+    try {
+      const featureFilename = scenario.sourceLocation.uri
+        .split("/")
+        .pop()
+        .split(".")
+        .shift();
+
+      this.attach(
+        `Screenshot for failed test: Feature ${featureFilename}-${scenario.pickle.name} on browser ${browser.desiredCapabilities.browserName} ${
+          browser.desiredCapabilities.version
+        }`,
+        "plain/text"
+      );
+      browser.saveDocumentScreenshot();
+    } catch (error) {
+      console.log(chalk.red(`${error}`));
+    }
+  }
 });

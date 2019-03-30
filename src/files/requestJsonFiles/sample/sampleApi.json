@@ -1,6 +1,10 @@
 {
-    "sampleItems": [
-        { "sampleKey": "sampleValue1" },
-        { "sampleKey": "sampleValue2" }
-    ]
+  "sampleItems": [
+    {
+      "sampleKey": "sampleValue1"
+    },
+    {
+      "sampleKey": "sampleValue2"
+    }
+  ]
 }

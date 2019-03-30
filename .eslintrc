@@ -1,0 +1,35 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "browser": true,
+    "expect": true,
+    "assert": true,
+    "axe": true
+  },
+  "plugins": [
+    "promise",
+    "prettier"
+  ],
+  "extends": [
+    "airbnb-base",
+    "plugin:promise/recommended",
+    "prettier"
+  ],
+  "rules":{
+    "no-shadow": "off",
+    "no-plusplus": "off",
+    "no-console": "off",
+    "camelcase": "off",
+    "no-useles-concut": "off",
+    "func-names": "off",
+    "no-use-before-define": "off",
+    "no-useless-escape": "off",
+    "no-underscore-dangle": "off",
+    "prefer-arrow-callback": "off",
+    "dot-notation": "off",
+    "prettier/prettier": "error"
+  }
+}

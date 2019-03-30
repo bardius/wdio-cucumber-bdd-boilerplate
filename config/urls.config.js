@@ -1,42 +1,28 @@
-const localUrls = {
-    landing_page: 'https://www.google.co.uk/',
-    login_page: 'https://accounts.google.com/ServiceLogin',
-    authenticated_page: 'https://accounts.google.com',
-    non_authenticated_page: 'https://accounts.google.com/ServiceLogin',
-    httpbin_api: 'http://httpbin.org'
-};
+const domains = require("./domains.config");
+const adminPages = require("../src/urls/cms.admin.pages");
+const journeyPages = require("../src/urls/journey.pages");
+const testDataPages = require("../src/urls/test.data.pages");
 
-const devUrls = {
-    landing_page: 'https://www.google.co.uk/',
-    login_page: 'https://accounts.google.com/ServiceLogin',
-    authenticated_page: 'https://accounts.google.com',
-    non_authenticated_page: 'https://accounts.google.com/ServiceLogin',
-    httpbin_api: 'http://httpbin.org'
-};
+const getLookupUrls = function(env, site, lookups, classifier, rootPaths) {
+  let urls = {};
+  if (lookups[site]) {
+    let domain = domains[site][env];
+    let rootPath = rootPaths ? rootPaths[site] : "";
 
-const prodUrls = {
-    landing_page: 'https://www.google.co.uk/',
-    login_page: 'https://accounts.google.com/ServiceLogin',
-    authenticated_page: 'https://accounts.google.com',
-    non_authenticated_page: 'https://accounts.google.com/ServiceLogin',
-    httpbin_api: 'http://httpbin.org'
+    Object.entries(lookups[site]).forEach(([key, value]) => {
+      urls[`${site}_${key}_${classifier}`] = `${domain}${rootPath}${value}`;
+    });
+  }
+  return urls;
 };
 
 module.exports = {
-    getURL: function(environment){
-        switch(environment) {
-            case 'local':
-                return localUrls;
-                break;
-            case 'dev':
-                return devUrls;
-                break;
-            case 'prod':
-                return prodUrls;
-                break;
-            default:
-                return localUrls;
-                break;
-        }
-    }
+  getURLs: function(env, site) {
+    return Object.assign(
+      {},
+      getLookupUrls(env, "cmsAdmin", adminPages, "admin_page"),
+      getLookupUrls(env, site, testDataPages, "page"),
+      getLookupUrls(env, site, journeyPages, "journey_page")
+    );
+  }
 };

@@ -5,17 +5,15 @@
  *                              not
  */
 module.exports = (element, falseCase) => {
-    /**
-     * The selected state
-     * @type {Boolean}
-     */
-    const isSelected = browser.isSelected(element);
+  /**
+   * The selected state
+   * @type {Boolean}
+   */
+  const isSelected = browser.isSelected(element);
 
-    if (falseCase) {
-        expect(isSelected).to.not
-            .equal(true, `"${element}" should not be selected`);
-    } else {
-        expect(isSelected).to
-            .equal(true, `"${element}" should be selected`);
-    }
+  if (falseCase) {
+    expect(isSelected).to.not.equal(true, `"${element}" should not be selected`);
+  } else {
+    expect(isSelected).to.equal(true, `"${element}" should be selected`);
+  }
 };

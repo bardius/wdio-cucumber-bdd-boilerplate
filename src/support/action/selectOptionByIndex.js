@@ -7,11 +7,11 @@
  * @todo  merge with selectOption
  */
 module.exports = (index, obsolete, selectElem) => {
-    /**
-     * The index of the option to select
-     * @type {Int}
-     */
-    const optionIndex = parseInt(index, 10);
+  /**
+   * The index of the option to select
+   * @type {Int}
+   */
+  const optionIndex = parseInt(index, 10);
 
-    browser.selectByIndex(selectElem, optionIndex);
+  browser.selectByIndex(selectElem, optionIndex);
 };

@@ -5,17 +5,15 @@
  *                              or not
  */
 module.exports = (selector, falseCase) => {
-    /**
-     * Value of the hasFocus function for the given element
-     * @type {Boolean}
-     */
-    const hasFocus = browser.hasFocus(selector);
+  /**
+   * Value of the hasFocus function for the given element
+   * @type {Boolean}
+   */
+  const hasFocus = browser.hasFocus(selector);
 
-    if (falseCase) {
-        expect(hasFocus).to.not
-            .equal(true, 'Expected element to not be focused, but it is');
-    } else {
-        expect(hasFocus).to
-            .equal(true, 'Expected element to be focused, but it is not');
-    }
+  if (falseCase) {
+    expect(hasFocus).to.not.equal(true, "Expected element to not be focused, but it is");
+  } else {
+    expect(hasFocus).to.equal(true, "Expected element to be focused, but it is not");
+  }
 };

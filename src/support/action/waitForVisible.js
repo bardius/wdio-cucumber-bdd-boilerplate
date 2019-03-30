@@ -7,11 +7,11 @@
  * @todo  merge with waitfor
  */
 module.exports = (elem, falseCase) => {
-    /**
-     * Maximum number of milliseconds to wait for
-     * @type {Int}
-     */
-    const ms = 10000;
+  /**
+   * Maximum number of milliseconds to wait for
+   * @type {Int}
+   */
+  const ms = 10000;
 
-    browser.waitForVisible(elem, ms, !!falseCase);
+  browser.waitForVisible(elem, ms, !!falseCase);
 };

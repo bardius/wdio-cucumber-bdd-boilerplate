@@ -24,5 +24,5 @@ Feature: Sample - Sample API Feature
         And response body should be valid according to openapi description 200OK in file swaggerFiles/sample/httpbin_1.0.json
 
         Examples:
-            | username      | password      |
-            | username1     | password1     |
+            | username  | password  |
+            | username1 | password1 |

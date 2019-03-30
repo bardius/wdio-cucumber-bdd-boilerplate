@@ -1,60 +1,53 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "Sample API overview",
-        "description": "Sample API overview",
-        "version": "v2"
-    },
-    "host": "sample.org",
-    "schemes": [
-        "http",
-        "https"
-    ],
-    "paths": {
-        "/sample/sampleAPI": {
-            "get": {
-                "operationId": "sampleAPIv2",
-                "description": "Sample API endpoint",
-                "summary": "Sample API endpoint",
-                "parameters": [],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "200 response",
-                        "schema": {
-                            "$ref": "#/definitions/sampleAPIResponse"
-                        },
-                        "examples": {
-                            "application/json": "{\n    \"sampleItems\": [\n        {\n            \"sampleKey\": \"sampleValue1\"\n            }\n    ]\n}"
-                        }
-                    }
-                }
+  "swagger": "2.0",
+  "info": {
+    "title": "Sample API overview",
+    "description": "Sample API overview",
+    "version": "v2"
+  },
+  "host": "sample.org",
+  "schemes": ["http", "https"],
+  "paths": {
+    "/sample/sampleAPI": {
+      "get": {
+        "operationId": "sampleAPIv2",
+        "description": "Sample API endpoint",
+        "summary": "Sample API endpoint",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/sampleAPIResponse"
+            },
+            "examples": {
+              "application/json": "{\n    \"sampleItems\": [\n        {\n            \"sampleKey\": \"sampleValue1\"\n            }\n    ]\n}"
             }
+          }
         }
-    },
-    "definitions": {
-        "sampleAPIResponse": {
+      }
+    }
+  },
+  "definitions": {
+    "sampleAPIResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "sampleItems": {
+          "type": "array",
+          "items": {
             "additionalProperties": false,
             "properties": {
-                "sampleItems": {
-                    "type": "array",
-                    "items": {
-                        "additionalProperties": false,
-                        "properties": {
-                            "sampleKey": {
-                                "type": "string"
-                            }
-                        },
-                        "type": "object"
-                    }
-                }
+              "sampleKey": {
+                "type": "string"
+              }
             },
             "type": "object"
+          }
         }
-    },
-    "consumes": [
-        "application/json"
-    ]
+      },
+      "type": "object"
+    }
+  },
+  "consumes": ["application/json"]
 }

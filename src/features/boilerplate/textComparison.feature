@@ -43,7 +43,7 @@ Feature: Test text contents of elements
     Scenario: Button not contains the text
         Then I expect that button "button[id='waitForCheckedBtn']" not contains the text "Not checked"
 
-     Scenario: Element containing different text
+    Scenario: Element containing different text
         Then I expect that element "button[id='waitForCheckedBtn']" not contains the text "This element contains cucumber"
 
     Scenario: Button contains any text

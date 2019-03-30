@@ -1,7 +1,0 @@
-## Login form
-sign_in_button: '//a[contains(text(), "Sign in")]'
-username_input: '//*[@id="identifierId"]'
-password_input: '//*[@id="identifierId"]'
-login_button: '//*[@id="identifierNext"]/content/span'
-logout_button: '//a[@id="gb_70"]'
-test: '//body'

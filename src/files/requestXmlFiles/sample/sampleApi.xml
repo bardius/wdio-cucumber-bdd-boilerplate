@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <sampleItems>
-    <item id="item1">
-        <sampleKey>sampleValue1</sampleKey>
-    </item>
-    <item id="item2">
-        <sampleKey>sampleValue2</sampleKey>
-    </item>
+  <item id="item1">
+    <sampleKey>sampleValue1</sampleKey>
+  </item>
+  <item id="item2">
+    <sampleKey>sampleValue2</sampleKey>
+  </item>
 </sampleItems>

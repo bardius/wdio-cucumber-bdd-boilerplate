@@ -5,14 +5,13 @@
 # Project #
 ########
 node_modules/
+package-lock.json
 *.map
-
 
 # Tests #
 ########
 output/**/*
 reports/**/*
-
 
 # Logs #
 ########
@@ -20,13 +19,7 @@ reports/**/*
 *.lck
 *.log.*
 seleniumLog*.*
-
-
-# SASS #
-########
-.sass-cache/
-*.scssc
-
+*.err
 
 # OS generated files #
 ######################
@@ -39,8 +32,7 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-
-# Random #
+# IDE #
 #################
 *.sublime-*
 nbproject/
