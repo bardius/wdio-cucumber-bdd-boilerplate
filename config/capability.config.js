@@ -98,7 +98,7 @@ module.exports = {
         break;
 
       case "MicrosoftEdge":
-        capability["version"] = "15.0";
+        capability["version"] = "18.17763";
         capability["enableNativeEvents"] = true;
         capability["ignoreProtectedModeSettings"] = true;
         capability["enablePersistentHover"] = true;
@@ -108,7 +108,7 @@ module.exports = {
         capability["disable-popup-blocking"] = true;
         capability["ie.browserCommandLineSwitches"] = "";
         capability["unexpectedAlertBehaviour"] = "InternetExplorerUnexpectedAlertBehaviour.Accept";
-        capability["metadata"]["browser"]["version"] = "15.0";
+        capability["metadata"]["browser"]["version"] = "18.17763";
         break;
 
       case "internet explorer":

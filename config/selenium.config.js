@@ -1,10 +1,11 @@
 const argv = require("yargs").argv;
+const path = require("path");
 const isDebugMode = argv.debugMode || false;
 const logsDir = "output/logs";
 
 const versions = {
   selenium: "3.141.59",
-  edge: "17134",
+  // See https://github.com/webdriverio/webdriverio/issues/3196#issuecomment-450656116 on how to install Edge v18 --jwp
   ie: "3.14.0",
   firefox: "0.24.0",
   chrome: "73.0.3683.68"
@@ -18,6 +19,7 @@ if (isDebugMode) {
 const seleniumJavaArgs = [];
 if (isDebugMode) {
   seleniumJavaArgs.push(
+    `-Dwebdriver.edge.driver=${path.join("C:", "Windows", "System32", "MicrosoftWebDriver.exe")}`, // for Edge v18+
     `-Dwebdriver.chrome.logfile=./${logsDir}/chrome-browser.log`,
     `-Dwebdriver.firefox.logfile=./${logsDir}/firefox-browser.log`,
     `-Dwebdriver.ie.driver.logfile=./${logsDir}/ie-browser.log`,
@@ -33,9 +35,6 @@ module.exports = {
     seleniumArgs: seleniumArgs,
     javaArgs: seleniumJavaArgs,
     drivers: {
-      edge: {
-        version: versions.edge
-      },
       ie: {
         version: versions.ie
       },
@@ -51,9 +50,6 @@ module.exports = {
     baseURL: "https://selenium-release.storage.googleapis.com",
     version: versions.selenium,
     drivers: {
-      edge: {
-        version: versions.edge
-      },
       ie: {
         version: versions.ie,
         baseURL: "https://selenium-release.storage.googleapis.com"
