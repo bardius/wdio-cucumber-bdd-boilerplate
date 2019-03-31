@@ -6,14 +6,16 @@ const chalk = require("chalk");
 const timeout = 115 * 1000;
 
 BeforeAll(function() {
-  // Set selenium timeouts
-  browser.timeouts("script", timeout);
-
   // Set cucumber timeouts
   setDefaultTimeout(timeout);
 });
 
 Before(function(scenario) {
+  if (browser["world"].config.capabilities.browserName !== "internet explorer") {
+    // Set selenium timeouts
+    browser.timeouts("script", timeout);
+  }
+
   this.apickli = new apickli.Apickli("http", "localhost", "src/files/");
   this.apickli.addRequestHeader("Cache-Control", "no-cache");
 

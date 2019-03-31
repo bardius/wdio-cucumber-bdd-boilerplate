@@ -46,7 +46,6 @@ module.exports = {
       acceptSslCerts: true,
       unexpectedAlertBehaviour: "accept",
       autoAcceptAlerts: true,
-      acceptInsecureCerts: true,
       metadata: {
         browser: {
           name: browser === "MicrosoftEdge" ? "edge" : browser,
@@ -64,6 +63,7 @@ module.exports = {
     switch (browser) {
       case "chrome":
         capability["version"] = "latest";
+        capability["acceptInsecureCerts"] = true;
         capability["chromeOptions"] = {
           prefs: {
             credentials_enable_service: false,
@@ -78,6 +78,7 @@ module.exports = {
 
       case "firefox":
         capability["version"] = "66.0.2";
+        capability["acceptInsecureCerts"] = true;
         capability["moz:firefoxOptions"] = {
           binary: path.join("C:", "Program Files (x86)", "Mozilla Firefox", "firefox.exe"),
           args: firefoxOptionsArgs,
@@ -90,6 +91,7 @@ module.exports = {
 
       case "safari":
         capability["version"] = "11.0";
+        capability["acceptInsecureCerts"] = true;
         capability["os"] = "OS X";
         capability["browserName"] = "Safari";
         capability["browser_version"] = "11.0";
@@ -99,6 +101,7 @@ module.exports = {
 
       case "MicrosoftEdge":
         capability["version"] = "18.17763";
+        capability["acceptInsecureCerts"] = true;
         capability["enableNativeEvents"] = true;
         capability["ignoreProtectedModeSettings"] = true;
         capability["enablePersistentHover"] = true;
