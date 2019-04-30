@@ -29,6 +29,10 @@ When(/^I take a screenshot of "([^"]*)?"$/, function(elementName) {
     return assert.equal(true, true, "No manual screenshots are required in Browserstack/Saucelabs mode");
   }
 
+  if (browser["world"].config.capabilities.browserName !== "internet explorer") {
+    return assert.equal(true, true, "No manual screenshots are can be taken for IE");
+  }
+
   try {
     const currentTime = normaliseName(new Date().toJSON());
     const normalisedScenarioName = normaliseName(this.currentScenario.pickle.name);
@@ -42,7 +46,7 @@ When(/^I take a screenshot of "([^"]*)?"$/, function(elementName) {
     this.attach("Screenshot taken");
 
     // Visual regression
-    if (browser["world"].config.isVisualRegressionMode) {
+    if (browser["world"].config.isVisualRegressionMode && browser["world"].config.capabilities.browserName !== "internet explorer") {
       const regressionSnapshots = browser.checkDocument();
       browser["world"].config.isVisualRegressionCompareMode ? assertDiff(regressionSnapshots) : true;
     }

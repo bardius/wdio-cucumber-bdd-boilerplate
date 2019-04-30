@@ -50,7 +50,7 @@ let wdioServices = ["selenium-standalone"];
 // Set visual regression service config
 const isVisualRegressionCompareOn = !!argv.visualRegressionCompare || false;
 const isVisualRegressionOn = !!argv.visualRegressionTag || isVisualRegressionCompareOn;
-if (isVisualRegressionOn) {
+if (isVisualRegressionOn && browser !== "ie") {
   wdioServices.push("visual-regression");
 }
 

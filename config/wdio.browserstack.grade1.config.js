@@ -36,7 +36,7 @@ wdioConfig.config.proxy = webDriverProxy;
 wdioConfig.config.user = browserStackUser;
 wdioConfig.config.key = browserStackKey;
 
-wdioConfig.config.services = ["browserstack"];
+wdioConfig.config.services.push("browserstack");
 
 wdioConfig.config.seleniumLogs = null;
 wdioConfig.config.seleniumArgs = null;
