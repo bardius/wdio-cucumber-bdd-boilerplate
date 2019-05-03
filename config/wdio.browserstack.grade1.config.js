@@ -36,7 +36,18 @@ wdioConfig.config.proxy = webDriverProxy;
 wdioConfig.config.user = browserStackUser;
 wdioConfig.config.key = browserStackKey;
 
-wdioConfig.config.services.push("browserstack");
+// Specify the browser that the tests will run against
+const browser = argv.browser || "chrome";
+
+// Generate the webdriverIO services array based on the provided arguments
+wdioConfig.config.services = ["browserstack"];
+
+// Set visual regression service config
+const isVisualRegressionCompareOn = !!argv.visualRegressionCompare || false;
+const isVisualRegressionOn = !!argv.visualRegressionTag || isVisualRegressionCompareOn;
+if (isVisualRegressionOn && browser !== "ie") {
+  wdioConfig.config.services.push("visual-regression");
+}
 
 wdioConfig.config.seleniumLogs = null;
 wdioConfig.config.seleniumArgs = null;
